@@ -1,0 +1,36 @@
+body {
+    background-color: LimeGreen;
+    color: White;
+    text-align: center;
+    font-size: 24px;
+}
+
+p, img {
+    padding: 5px;
+}
+
+.large-bold {
+    font-weight: bold;
+    font-size: 3em;
+}
+
+
+.cold {
+	background-color: #95A5A6
+}
+
+.chilly {
+	background-color: #1ABC9C
+}
+
+.nice {
+	background-color: #2980B9
+}
+
+.warm {
+	background-color: #E67E22
+}
+
+.hot {
+	background-color: #E74C3C 
+}
