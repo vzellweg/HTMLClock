@@ -95,3 +95,41 @@ function showLocationError(error) {
     */
     getTemp();
 }
+
+/*
+ * Removes the 'hide' class from the 'mask' nad 'popup' divs
+*/
+function showAlarmPopup() {
+	$('#mask').removeClass('hide');
+	$('#popup').removeClass('hide');
+	//$('flexible input[type=button][value=Save Alarm]').click(ShowAlarmPopup);
+}
+
+function hideAlarmPopup() {
+	$('#mask').addClass('hide');
+	$('#popup').addClass('hide');
+}
+
+function insertAlarm(hours, mins, ampm, alarmName) {
+	var newAlarm = $('<div>').addClass('flexable');
+
+	newAlarm.append($('<div>').addClass('name').html(alarmName));
+
+	newAlarm.append($('<div>').addClass('time').html(hours + ':' + mins + ' ' + ampm)); 
+
+	$('#alarms').append(newAlarm);
+}
+
+function addAlarm() {
+	var hours = $("#hours option:selected").text();
+
+	var mins = $("#mins option:selected").text();
+
+	var ampm  = $("#ampm option:selected").text();
+
+	var alarmName = $("#alarmName").val();
+
+	insertAlarm(hours, mins, ampm, alarmName);
+	
+	hideAlarmPopup();
+}

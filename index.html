@@ -5,15 +5,53 @@
     <meta charset="UTF-8">
     <title>Lab 4 - vellweg</title>
     <link href="css/index.css" rel="stylesheet">
+    <link href="css/alarm.css" rel="stylesheet">
 </head>
 
 <body class='chilly'>
     <p>Victor's Clock:</p>
     <div id="clock" class="large-bold"></div>
     
-    <div id='forecastLabel'>No Alarms Set</div>
+    <div id='forecastLabel'></div>
     
     <img id='forecastIcon'>
+
+    <div id="alarmContainer" class="flexible">
+      <div id="alarmHeader">
+         <h2>Alarms</h2>
+         <input type="button" onclick="showAlarmPopup()" value="Add Alarm" class="button"/>
+      </div>
+      
+      <div id="alarms"></div>
+
+    </div>
+    <div id="mask" class="hide"> </div>
+
+    <div id="popup" class="hide">
+       <h2>Add Alarm</h2>
+       <div id="timeContainer">
+           <select id="hours">
+               <option>01</option>
+               <option>02</option>
+               <option>03</option>
+           </select>
+           <select id="mins">
+               <option>01</option>
+               <option>02</option>
+               <option>03</option>
+           </select>
+           <select id="ampm">
+               <option>am</option>
+               <option>pm</option>
+           </select>
+       </div>
+       <input type="text" id="alarmName" placeholder="Alarm Name" />      
+       <div class="flexable">
+           <input type="button" value="Cancel" class="button"/>
+           <input type="button" onClick="addAlarm()" value="Save Alarm" class="button"/>
+       </div>
+   </div>
+
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
