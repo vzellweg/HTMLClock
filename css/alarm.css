@@ -81,6 +81,8 @@ h2 {
 
 #alarmHeader .button {
 	margin-top: 0px;
+	width: 100%;
+	font-size: .8em;
 }
 
 
