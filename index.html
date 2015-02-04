@@ -4,8 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Lab 4 - vellweg</title>
+
     <link href="css/index.css" rel="stylesheet">
     <link href="css/alarm.css" rel="stylesheet">
+    <!--  jQueryUI UI-lightness CDN -->
+    <link href="https://code.jquery.com/ui/1.11.2/themes/ui-lightness/jquery-ui.css">
+    <script src="http://www.parsecdn.com/js/parse-1.3.4.min.js"></script>
+
 </head>
 
 <body class='chilly'>
@@ -19,13 +24,14 @@
     <div id="alarmContainer" class="flexible">
       <div id="alarmHeader">
          <h2>Alarms</h2>
-         <input type="button" onclick="showAlarmPopup()" value="Add Alarm" class="button"/>
+         <button id="addAlarm" type="button" value="Add Alarm" class="button">Add Alarm</button>
+         <button id='deleteAlarm' type="button" value="Delete Alarm" class="button">Delete Alarm</button>
       </div>
       
-      <div id="alarms"></div>
+      <div id="alarms"><ul id="selectable"></ul></div>
 
     </div>
-    <div id="mask" class="hide"> </div>
+    <div id="mask" class="hide"></div>
 
     <div id="popup" class="hide">
        <h2>Add Alarm</h2>
@@ -34,11 +40,21 @@
                <option>01</option>
                <option>02</option>
                <option>03</option>
+               <option>04</option>
+               <option>05</option>
+               <option>06</option>
+               <option>07</option>
+               <option>08</option>
+               <option>09</option>
+               <option>10</option>
+               <option>11</option>
+               <option>12</option>
            </select>
            <select id="mins">
-               <option>01</option>
-               <option>02</option>
-               <option>03</option>
+               <option>00</option>
+               <option>15</option>
+               <option>30</option>
+               <option>45</option>
            </select>
            <select id="ampm">
                <option>am</option>
@@ -47,14 +63,20 @@
        </div>
        <input type="text" id="alarmName" placeholder="Alarm Name" />      
        <div class="flexable">
-           <input type="button" value="Cancel" class="button"/>
-           <input type="button" onClick="addAlarm()" value="Save Alarm" class="button"/>
+           <input id="hideAlarm" type="button" value="Cancel" class="button"/>
+           <input id="saveAlarm" type="button" value="Save Alarm" class="button"/>
        </div>
    </div>
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <!--  jQueryUI 1.11.2 CDN minified -->
+    <script src="https://code.jquery.com/ui/1.11.2/jquery-ui.min.js"></script>
+    
     <script type="text/javascript" src="js/index.js"></script>
+    <script>
+      $(function() {new Alarm().configure();});
+    </script>
 
 </body>
 

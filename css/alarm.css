@@ -6,7 +6,6 @@ h2 {
 	display:none;
 }
 .button {
-	display:block;
 	margin:10px auto;
 	width:100px;
 	padding:10px 10px;
@@ -79,3 +78,17 @@ h2 {
 	font-size:14px;
 	margin:10px auto 25px auto;
 }
+
+#alarmHeader .button {
+	margin-top: 0px;
+}
+
+
+
+.name, .time {
+	width: 100%;
+}
+
+#selectable .ui-selecting { background: #FECA40; }
+#selectable .ui-selected { background: #F39814; color: white; }
+#selectable { list-style-type: none; margin: 0; padding: 0;  }
