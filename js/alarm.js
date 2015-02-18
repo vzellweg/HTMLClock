@@ -119,11 +119,10 @@ function addAlarm () {
     
 }
 
-function getAllAlarms (self) {
+function getAllAlarms (userId) {
 	Parse.initialize("rnjXHYtI61sJUWgVmpU04DW9YIzGS8jfOD6StWbz", "pV0BlDH2m6kSpDhTheYYEoSMRxZ4OoHoaUy55bva");
 	var AlarmObject = Parse.Object.extend("Alarm");
     var query = new Parse.Query(AlarmObject);
-    var $this = self;
 
 
     query.find({

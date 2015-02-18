@@ -2,11 +2,11 @@ $(document).ready(function()
 	{
 		getTime();
 		getLocation();
-		getAllAlarms(this);
 		$('#addAlarm').button().click(showAlarmPopup);
 		$('#deleteAlarm').button().click(deleteAlarm);
 		$('#hideAlarm').button().click(hideAlarmPopup);
 		$('#saveAlarm').button().click(addAlarm);
+
 	});
 
 function getTime() {
@@ -101,40 +101,21 @@ function showLocationError(error) {
     getTemp();
 }
 
-/*
- * Removes the 'hide' class from the 'mask' nad 'popup' divs
-*/
-function showAlarmPopup() {
-    $('#mask').removeClass('hide');
-    $('#popup').removeClass('hide');
-    //$('flexible input[type=button][value=Save Alarm]').click(ShowAlarmPopup);
-}
-
-function hideAlarmPopup() {
-    $('#mask').addClass('hide');
-    $('#popup').addClass('hide');
-}
-
-function insertAlarm(hours, mins, ampm, alarmName) {
-    var newAlarm = $('<div>').addClass('flexable');
-
-    newAlarm.append($('<div>').addClass('name').html(alarmName));
-
-    newAlarm.append($('<div>').addClass('time').html(hours + ':' + mins + ' ' + ampm)); 
-
-    $('#alarms').append(newAlarm);
-}
-
-function addAlarm() {
-    var hours = $("#hours option:selected").text();
-
-    var mins = $("#mins option:selected").text();
-
-    var ampm  = $("#ampm option:selected").text();
-
-    var alarmName = $("#alarmName").val();
-
-    insertAlarm(hours, mins, ampm, alarmName);
-    
-    hideAlarmPopup();
+function signinCallback(authResult) {
+  if (authResult['status']['signed_in']) {
+  	console.log("login Success! Result: " + JSON.stringify(authResult));
+    // Update the app to reflect a signed in user
+    // Hide the sign-in button now that the user is authorized, for example:
+    $('#gSignInWrapper').toggleClass('hide');
+    $('#selectable').toggleClass('hide');
+    getAllAlarms();
+		
+  } else {
+    // Update the app to reflect a signed out user
+    // Possible error values:
+    //   "user_signed_out" - User is signed-out
+    //   "access_denied" - User denied access to your app
+    //   "immediate_failed" - Could not automatically log in the user
+    console.log('Sign-in state: ' + authResult['error']);
+  }
 }
