@@ -2,8 +2,8 @@ $(document).ready(function()
 	{
 		getTime();
 		getLocation();
-		$('#addAlarm').button().click(showAlarmPopup);
-		$('#deleteAlarm').button().click(deleteAlarm);
+		$('#addAlarm').button().click(showAlarmPopup).hide();
+		$('#deleteAlarm').button().click(deleteAlarm).hide();
 		$('#hideAlarm').button().click(hideAlarmPopup);
 		$('#saveAlarm').button().click(addAlarm);
 
@@ -101,21 +101,39 @@ function showLocationError(error) {
     getTemp();
 }
 
-function signinCallback(authResult) {
-  if (authResult['status']['signed_in']) {
-  	console.log("login Success! Result: " + JSON.stringify(authResult));
-    // Update the app to reflect a signed in user
-    // Hide the sign-in button now that the user is authorized, for example:
-    $('#gSignInWrapper').toggleClass('hide');
-    $('#selectable').toggleClass('hide');
-    getAllAlarms();
-		
-  } else {
-    // Update the app to reflect a signed out user
-    // Possible error values:
-    //   "user_signed_out" - User is signed-out
-    //   "access_denied" - User denied access to your app
-    //   "immediate_failed" - Could not automatically log in the user
-    console.log('Sign-in state: ' + authResult['error']);
-  }
+/**
+* Handler for the signin callback triggered after the user selects an account.
+*/
+function onSignInCallback(resp) {
+	gapi.client.load('plus', 'v1', apiClientLoaded);
+}
+
+/**
+* Sets up an API call after the Google API client loads.
+*/
+function apiClientLoaded() {
+	gapi.client.plus.people.get({userId: 'me'}).execute(handleEmailResponse);
+}
+
+/**
+* Response callback for when the API client receives a response.
+*
+* @param resp The API response object with the user email and profile information.
+*/
+function handleEmailResponse(resp) {
+	var primaryEmail;
+	console.log('email response: ' + JSON.stringify(resp));
+	$('#gConnect').hide();
+	for (var i=0; i < resp.emails.length; i++) {
+	  if (resp.emails[i].type === 'account') primaryEmail = resp.emails[i].value;
+	}
+	$('#user-id').text('user: ' + primaryEmail);
+	     // + '\n\nFull Response:\n' + JSON.stringify(resp);
+
+    $('#user-id').removeClass('hide');
+ 	$('#addAlarm').show();
+	$('#deleteAlarm').show();
+	$('#selectable').show();
+
+	getAllAlarms(primaryEmail);
 }

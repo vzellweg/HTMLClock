@@ -98,6 +98,8 @@ function addAlarm () {
 
    var time = hours + ':' + mins + ':' + ampm;
 	
+   var userId = $('#user-id').text().split(' ')[1];
+
 	var AlarmObject = Parse.Object.extend("Alarm");
    var alarmObject = new AlarmObject();
 
@@ -105,7 +107,7 @@ function addAlarm () {
   		alert("yay! it worked");
 	});
 */   
-    alarmObject.save({"time": time,"alarmName": alarmName}, {
+    alarmObject.save({"time": time,"alarmName": alarmName, "createdBy": userId}, {
       success: function(object) {
       	insertAlarm(hours, mins, ampm, alarmName);
     	hideAlarmPopup();
@@ -124,6 +126,7 @@ function getAllAlarms (userId) {
 	var AlarmObject = Parse.Object.extend("Alarm");
     var query = new Parse.Query(AlarmObject);
 
+    query.equalTo("createdBy", userId);
 
     query.find({
         success: function(results) {

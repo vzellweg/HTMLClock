@@ -15,21 +15,25 @@ p, img {
 
 
 .cold {
-	background-color: #95A5A6
+	background-color: #95A5A6;
 }
 
 .chilly {
-	background-color: #1ABC9C
+	background-color: #1ABC9C;
 }
 
 .nice {
-	background-color: #2980B9
+	background-color: #2980B9;
 }
 
 .warm {
-	background-color: #E67E22
+	background-color: #E67E22;
 }
 
 .hot {
-	background-color: #E74C3C 
+	background-color: #E74C3C;
+}
+
+#user-id {
+    padding-bottom: 5px;
 }

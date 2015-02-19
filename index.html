@@ -10,22 +10,7 @@
     <!--  jQueryUI UI-lightness CDN -->
     <link href="https://code.jquery.com/ui/1.11.2/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
     <script src="http://www.parsecdn.com/js/parse-1.3.4.min.js"></script>
-
-    <meta name="google-signin-clientid" content="863175916633-aj79f8nfu9qc3btp0ecnh0kbp0uhbanm.apps.googleusercontent.com" />
-    <meta name="google-signin-scope" content="https://www.googleapis.com/auth/plus.login" />
-    <meta name="google-signin-requestvisibleactions" content="http://schema.org/AddAction" />
-    <meta name="google-signin-cookiepolicy" content="single_host_origin" />
-    <meta name="google-signin-callback" content="signinCallback" />
-    <script src="https://apis.google.com/js/client:platform.js?onload=render" async defer>
-    /* Executed when the APIs finish loading */
-      function render() {
-        // Additional params
-        var additionalParams = {
-          'theme' : 'dark'
-        };
-        gapi.signin.render('myButton', additionalParams);
-      }
-    </script>
+    <script src = "https://plus.google.com/js/client:plusone.js"></script>
 </head>
 
 <body class='chilly'>
@@ -39,18 +24,28 @@
     <div id="alarmContainer" class="flexible">
       <div id="alarmHeader">
          <h2>Alarms</h2>
+         <div id="user-id" class="hide">
+            
+          </div>
          <button id="addAlarm" type="button" value="Add Alarm" class="button">Add Alarm</button>
          <button id='deleteAlarm' type="button" value="Delete Alarm" class="button">Delete Alarm</button>
-        </div>
+         <!-- Container with the Sign-In button. -->
+        <div id="gConnect" class="button">
+          <button class="g-signin"
+              data-scope="email"
+              data-clientid="863175916633-aj79f8nfu9qc3btp0ecnh0kbp0uhbanm.apps.googleusercontent.com"
+              data-callback="onSignInCallback"
+              data-theme="dark"
+              data-cookiepolicy="single_host_origin">
+          </button>
+          <!-- Textarea for outputting data -->
           
-        <div id="alarms">
-          <!-- google signin button -->
-          <div id="gSignInWrapper">
-            <div id="myButton" class="classesToStyleWith">
-              Sign in with Google
-            </div>
-          </div>
-        <ul id="selectable" class="hide"></ul>
+        </div>      
+      </div>
+          
+      <div id="alarms">
+        
+        <ul id="selectable"></ul>
       </div>
 
     </div>
