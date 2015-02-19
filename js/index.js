@@ -122,6 +122,10 @@ function apiClientLoaded() {
 */
 function handleEmailResponse(resp) {
 	var primaryEmail;
+
+	if (resp.code === 403) {
+		return;
+	}
 	console.log('email response: ' + JSON.stringify(resp));
 	$('#gConnect').hide();
 	for (var i=0; i < resp.emails.length; i++) {
