@@ -1,13 +1,13 @@
 $(document).ready(function()
-	{
-		getTime();
-		getLocation();
-		$('#addAlarm').button().click(showAlarmPopup).hide();
-		$('#deleteAlarm').button().click(deleteAlarm).hide();
-		$('#hideAlarm').button().click(hideAlarmPopup);
-		$('#saveAlarm').button().click(addAlarm);
+   {
+      getTime();
+      getLocation();
+      $('#addAlarm').button().click(showAlarmPopup).hide();
+      $('#deleteAlarm').button().click(deleteAlarm).hide();
+      $('#hideAlarm').button().click(hideAlarmPopup);
+      $('#saveAlarm').button().click(addAlarm);
 
-	});
+   });
 
 function getTime() {
    var d = new Date();
@@ -15,55 +15,55 @@ function getTime() {
 
    var timeInterval = setTimeout(function(){getTime()},500);
 }
- 	
+   
 function getTemp(latitude, longitude) {
-	// Set the default geolocation to building 14 
-	latitude = typeof latitude !== 'undefined' ? latitude : 35.300399;
+   // Set the default geolocation to building 14 
+   latitude = typeof latitude !== 'undefined' ? latitude : 35.300399;
     longitude = typeof longitude !== 'undefined' ? longitude : -120.662362;
-	$.getJSON('https://api.forecast.io/forecast/3dad6326f2e1b16e70c1ebb234eb5022/' + latitude + ',' + longitude + '?callback=?',
-		tempSuccess
-	);
+   $.getJSON('https://api.forecast.io/forecast/3dad6326f2e1b16e70c1ebb234eb5022/' + latitude + ',' + longitude + '?callback=?',
+      tempSuccess
+   );
 }
 
 /*
  * Calculate background color based on temperature.
  */
 function tempSuccess(data) {
-	console.log('Success!');
-	console.log(data);
-	var today = data.daily.data[0]; 
-	var tempClass;
+   console.log('Success!');
+   console.log(data);
+   var today = data.daily.data[0]; 
+   var tempClass;
 
-	if (today.temperatureMax < 60)
-	{
-		tempClass = 'cold';
-	}
-	else if (today.temperatureMax < 70) 
-	{
-		tempClass = 'chilly';
-	}
-	else if (today.temperatureMax < 80) 
-	{
-		tempClass = 'nice';
-	}
-	else if (today.temperatureMax < 90) 
-	{
-		tempClass = 'warm';
-	}
-	else
-	{
-		tempClass = 'hot';
-	}
+   if (today.temperatureMax < 60)
+   {
+      tempClass = 'cold';
+   }
+   else if (today.temperatureMax < 70) 
+   {
+      tempClass = 'chilly';
+   }
+   else if (today.temperatureMax < 80) 
+   {
+      tempClass = 'nice';
+   }
+   else if (today.temperatureMax < 90) 
+   {
+      tempClass = 'warm';
+   }
+   else
+   {
+      tempClass = 'hot';
+   }
 
 
-	$('body').removeClass();
-	$('body').addClass(tempClass);
-	
-	$('#forecastLabel').text(today.summary);
+   $('body').removeClass();
+   $('body').addClass(tempClass);
+   
+   $('#forecastLabel').text(today.summary);
 
-	$('#forecastIcon').attr('src', 'img/' + today.icon + '.png');
+   $('#forecastIcon').attr('src', 'img/' + today.icon + '.png');
 
-	$('#forecastIcon').attr('alt', today.summary + ' icon');
+   $('#forecastIcon').attr('alt', today.summary + ' icon');
 }
 
 function getLocation() {
@@ -82,7 +82,7 @@ function showPosition(position) {
  * Handles any potential errors getting the user location.
  */
 function showLocationError(error) {
-	/*
+   /*
     switch(error.code) {
         case error.PERMISSION_DENIED:
             x.innerHTML = "User denied the request for Geolocation."
@@ -105,14 +105,14 @@ function showLocationError(error) {
 * Handler for the signin callback triggered after the user selects an account.
 */
 function onSignInCallback(resp) {
-	gapi.client.load('plus', 'v1', apiClientLoaded);
+   gapi.client.load('plus', 'v1', apiClientLoaded);
 }
 
 /**
 * Sets up an API call after the Google API client loads.
 */
 function apiClientLoaded() {
-	gapi.client.plus.people.get({userId: 'me'}).execute(handleEmailResponse);
+   gapi.client.plus.people.get({userId: 'me'}).execute(handleEmailResponse);
 }
 
 /**
@@ -121,23 +121,23 @@ function apiClientLoaded() {
 * @param resp The API response object with the user email and profile information.
 */
 function handleEmailResponse(resp) {
-	var primaryEmail;
+   var primaryEmail;
 
-	if (resp.code === 403) {
-		return;
-	}
-	console.log('email response: ' + JSON.stringify(resp));
-	$('#gConnect').hide();
-	for (var i=0; i < resp.emails.length; i++) {
-	  if (resp.emails[i].type === 'account') primaryEmail = resp.emails[i].value;
-	}
-	$('#user-id').text('user: ' + primaryEmail);
-	     // + '\n\nFull Response:\n' + JSON.stringify(resp);
+   if (resp.code === 403) {
+      return;
+   }
+   console.log('email response: ' + JSON.stringify(resp));
+   $('#gConnect').hide();
+   for (var i=0; i < resp.emails.length; i++) {
+     if (resp.emails[i].type === 'account') primaryEmail = resp.emails[i].value;
+   }
+   $('#user-id').text('user: ' + primaryEmail);
+        // + '\n\nFull Response:\n' + JSON.stringify(resp);
 
     $('#user-id').removeClass('hide');
- 	$('#addAlarm').show();
-	$('#deleteAlarm').show();
-	$('#selectable').show();
+   $('#addAlarm').show();
+   $('#deleteAlarm').show();
+   $('#selectable').show();
 
-	getAllAlarms(primaryEmail);
+   getAllAlarms(primaryEmail);
 }
