@@ -2,11 +2,10 @@ $(document).ready(function()
    {
       getTime();
       getLocation();
-      $('#addAlarm').button().click(showAlarmPopup).hide();
-      $('#deleteAlarm').button().click(deleteAlarm).hide();
+      $('#addAlarm').button().click(showAlarmPopup);
+      $('#deleteAlarm').button().click(deleteAlarm);
       $('#hideAlarm').button().click(hideAlarmPopup);
-      $('#saveAlarm').button().click(addAlarm);
-
+      $('#saveAlarm').button({disabled: true}).click(addAlarm);
    });
 
 function getTime() {
@@ -69,7 +68,7 @@ function tempSuccess(data) {
 function getLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition, showLocationError);
-    } else { 
+    } else {
         x.innerHTML = "Geolocation is not supported by this browser.";
     }
 }
@@ -128,16 +127,18 @@ function handleEmailResponse(resp) {
    }
    console.log('email response: ' + JSON.stringify(resp));
    $('#gConnect').hide();
+   $('#saveAlarm').button('enable');
+   
    for (var i=0; i < resp.emails.length; i++) {
      if (resp.emails[i].type === 'account') primaryEmail = resp.emails[i].value;
    }
    $('#user-id').text('user: ' + primaryEmail);
         // + '\n\nFull Response:\n' + JSON.stringify(resp);
 
-    $('#user-id').removeClass('hide');
-   $('#addAlarm').show();
+   $('#user-id').removeClass('hide');
+   /*$('#addAlarm').show();
    $('#deleteAlarm').show();
+   */
    $('#selectable').show();
-
    getAllAlarms(primaryEmail);
 }
