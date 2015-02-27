@@ -24,7 +24,7 @@ function deleteAlarm () {
    var userField = $('#user-id').text().trim();
    
    console.log('userField: ' + userField);
-   if (!userField) {
+   if (alarmDOM && !userField) {
       console.log('removing signed-off alarm');
       alarmDOM.detach();
       ga('send', 'event', 'Alarm', 'Delete');
@@ -33,50 +33,39 @@ function deleteAlarm () {
          $('#no-alarms').show();
       }
       return;
-   }
-/* alarmObject.destroy({
-            success: function(myObject) {
-               alert('The object was deleted from the Parse Cloud.');
-               alarmDOM.detach();
-            },
-            error: function(myObject, error) {
-               alert('The delete failed.' + '\n' + error);
-               // error is a Parse.Error with an error code and message.
-            }  
-         });   
-*/ 
-   query.first({
-         success: function(object) {
-            var removeId = object.id;
-            query.get(removeId, {
-               success: function (myObject) {
-                  myObject.destroy({
-                     success: function(myObject) {
-                        alarmDOM.detach();
-                        if ($('#selectable li').length < 1) {
-                           $('#no-alarms').show();
-                        }
-                        ga('send', 'event', 'Alarm', 'Delete');
-   
+   } else if (alarmDOM) {
+      query.first({
+               success: function(object) {
+                  var removeId = object.id;
+                  query.get(removeId, {
+                     success: function (myObject) {
+                        myObject.destroy({
+                           success: function(myObject) {
+                              alarmDOM.detach();
+                              if ($('#selectable li').length < 1) {
+                                 $('#no-alarms').show();
+                              }
+                              ga('send', 'event', 'Alarm', 'Delete');
+         
+                           },
+                           error: function(myObject, error) {
+                              alert('The delete failed.' + '\n' + error);
+                              // error is a Parse.Error with an error code and message.
+                           }  
+                        });   
                      },
                      error: function(myObject, error) {
-                        alert('The delete failed.' + '\n' + error);
+                        console.log('The get failed.' + '\n' + error);
                         // error is a Parse.Error with an error code and message.
                      }  
-                  });   
+                  });
                },
                error: function(myObject, error) {
-                  console.log('The get failed.' + '\n' + error);
+                  console.log('The query failed.' + '\n' + error);
                   // error is a Parse.Error with an error code and message.
-               }  
+               }
             });
-         },
-         error: function(myObject, error) {
-            console.log('The query failed.' + '\n' + error);
-            // error is a Parse.Error with an error code and message.
          }
-      });
-   
 }
 
 /*
@@ -131,7 +120,7 @@ function addAlarm () {
 */  
    
   ga('send', 'event', 'Alarm', 'Add');
-  
+
    if (userId) {
       alarmObject.save({"time": time,"alarmName": alarmName, "createdBy": userId}, {
          success: function(object) {

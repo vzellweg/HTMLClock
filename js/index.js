@@ -136,11 +136,7 @@ function handleEmailResponse(resp) {
         // + '\n\nFull Response:\n' + JSON.stringify(resp);
 
    $('#user-id').show();
-   /*$('#addAlarm').show();
-   $('#deleteAlarm').show();
-   */
-  // don't think need
-  // $('#selectable').show();
+   
    getAllAlarms(primaryEmail);
 }
 
