@@ -5,7 +5,8 @@ $(document).ready(function()
       $('#addAlarm').button().click(showAlarmPopup);
       $('#deleteAlarm').button().click(deleteAlarm);
       $('#hideAlarm').button().click(hideAlarmPopup);
-      $('#saveAlarm').button({disabled: true}).click(addAlarm);
+      $('#saveAlarm').button().click(addAlarm);
+      $('#selectable').selectable();
    });
 
 function getTime() {
@@ -127,7 +128,6 @@ function handleEmailResponse(resp) {
    }
    console.log('email response: ' + JSON.stringify(resp));
    $('#gConnect').hide();
-   $('#saveAlarm').button('enable');
    
    for (var i=0; i < resp.emails.length; i++) {
      if (resp.emails[i].type === 'account') primaryEmail = resp.emails[i].value;
@@ -135,10 +135,24 @@ function handleEmailResponse(resp) {
    $('#user-id').text('user: ' + primaryEmail);
         // + '\n\nFull Response:\n' + JSON.stringify(resp);
 
-   $('#user-id').removeClass('hide');
+   $('#user-id').show();
    /*$('#addAlarm').show();
    $('#deleteAlarm').show();
    */
-   $('#selectable').show();
+  // don't think need
+  // $('#selectable').show();
    getAllAlarms(primaryEmail);
+}
+
+/* Log user out of this app. */
+function onSignOutCallback() {
+   $('#user-id').empty();
+   $('#user-id').hide();
+   /*$('#addAlarm').show();
+   $('#deleteAlarm').show();
+   */
+
+   $('#selectable').hide();
+   getAllAlarms(null);
+
 }

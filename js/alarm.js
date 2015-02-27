@@ -13,13 +13,24 @@ function deleteAlarm () {
          var self = $(elt);
 
          if (self.hasClass('ui-selected')) {
-            alert('ndx ' + ndx + ', deleting alarm ' + self.find('.name').text());
             alarmDOM = self;
             alarmNdx = ndx;
             query.equalTo("alarmName", self.find('.name').text());
 
          }
       });
+   
+   var userField = $('#user-id').text().trim();
+   
+   console.log('userField: ' + userField);
+   if (!userField) {
+      console.log('removing signed-off alarm');
+      alarmDOM.detach();
+      if ($('#selectable li').length < 1) {
+         $('#no-alarms').show();
+      }
+      return;
+   }
 /* alarmObject.destroy({
             success: function(myObject) {
                alert('The object was deleted from the Parse Cloud.');
@@ -103,8 +114,8 @@ function addAlarm () {
    var alarmName = $("#alarmName").val();
 
    var time = hours + ':' + mins + ':' + ampm;
-   
-   var userId = $('#user-id').text().split(' ')[1];
+   var userField = $('#user-id').text();
+   var userId = userField ? userField.split(' ')[1] : null;
 
    var AlarmObject = Parse.Object.extend("Alarm");
    var alarmObject = new AlarmObject();
@@ -113,17 +124,21 @@ function addAlarm () {
       alert("yay! it worked");
    });
 */   
-    alarmObject.save({"time": time,"alarmName": alarmName, "createdBy": userId}, {
-      success: function(object) {
-         insertAlarm(hours, mins, ampm, alarmName);
+   if (userId) {
+      alarmObject.save({"time": time,"alarmName": alarmName, "createdBy": userId}, {
+         success: function(object) {
+            insertAlarm(hours, mins, ampm, alarmName);
+            hideAlarmPopup();
+         },
+         error: function(error) {
+            alert('error saving new object');
+            return;
+         }
+       });
+   } else {
+      insertAlarm(hours, mins, ampm, alarmName);
       hideAlarmPopup();
-      },
-      error: function(error) {
-         alert('error saving new object');
-         return;
-      }
-    });
-
+   }
     
 }
 
@@ -136,8 +151,10 @@ function getAllAlarms (userId) {
 
     query.find({
         success: function(results) {
+            //remove any existing list items
+            $('#selectable li').detach();
 
-            $('#selectable').selectable();
+            
 
             for (var i = 0; i < results.length; i++) { 
                var attrs = results[i].attributes;
