@@ -8,6 +8,7 @@ function deleteAlarm () {
    var alarmDOM;
    var removeId;
 
+
    $('#selectable li').each(
       function (ndx, elt) {
          var self = $(elt);
@@ -26,6 +27,8 @@ function deleteAlarm () {
    if (!userField) {
       console.log('removing signed-off alarm');
       alarmDOM.detach();
+      ga('send', 'event', 'Alarm', 'Delete');
+   
       if ($('#selectable li').length < 1) {
          $('#no-alarms').show();
       }
@@ -53,6 +56,8 @@ function deleteAlarm () {
                         if ($('#selectable li').length < 1) {
                            $('#no-alarms').show();
                         }
+                        ga('send', 'event', 'Alarm', 'Delete');
+   
                      },
                      error: function(myObject, error) {
                         alert('The delete failed.' + '\n' + error);
@@ -123,7 +128,10 @@ function addAlarm () {
 /*    alarmObject.save({foo: "bar"}).then(function(object) {
       alert("yay! it worked");
    });
-*/   
+*/  
+   
+  ga('send', 'event', 'Alarm', 'Add');
+  
    if (userId) {
       alarmObject.save({"time": time,"alarmName": alarmName, "createdBy": userId}, {
          success: function(object) {
