@@ -7,6 +7,8 @@ $(document).ready(function()
       $('#hideAlarm').button().click(hideAlarmPopup);
       $('#saveAlarm').button().click(addAlarm);
       $('#selectable').selectable();
+      ga('send', 'event', 'Alarm', 'Add');
+      ga('send', 'event', 'Alarm', 'Delete');
    });
 
 function getTime() {
